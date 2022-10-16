@@ -389,3 +389,110 @@ func Test_isCombinationOfFullHouse(t *testing.T) {
 		assert.False(t, isCombinationOfFullHouse(cards))
 	})
 }
+
+func Test_isCombinationOfStraight(t *testing.T) {
+	t.Run("[6D, 7S, 8D, 9C, 10H] produce true", func(t *testing.T) {
+		cards := []Card{
+			{
+				Face: Face6,
+				Suit: SuitDiamonds,
+			},
+			{
+				Face: Face7,
+				Suit: SuitSpades,
+			},
+			{
+				Face: Face8,
+				Suit: SuitDiamonds,
+			},
+			{
+				Face: Face9,
+				Suit: SuitClubs,
+			},
+			{
+				Face: Face10,
+				Suit: SuitHearts,
+			},
+		}
+		assert.True(t, isCombinationOfStraight(cards))
+	})
+	t.Run("[AD, 2S, 3D, 4C, 5H] produce true", func(t *testing.T) {
+		cards := []Card{
+			{
+				Face: FaceAce,
+				Suit: SuitDiamonds,
+			},
+			{
+				Face: Face2,
+				Suit: SuitSpades,
+			},
+			{
+				Face: Face3,
+				Suit: SuitDiamonds,
+			},
+			{
+				Face: Face4,
+				Suit: SuitClubs,
+			},
+			{
+				Face: Face5,
+				Suit: SuitHearts,
+			},
+		}
+		assert.True(t, isCombinationOfStraight(cards))
+	})
+	t.Run("[AD, KS, QD, JC, 10H] produce true", func(t *testing.T) {
+		cards := []Card{
+			{
+				Face: FaceAce,
+				Suit: SuitDiamonds,
+			},
+			{
+				Face: FaceKing,
+				Suit: SuitSpades,
+			},
+			{
+				Face: FaceQueen,
+				Suit: SuitDiamonds,
+			},
+			{
+				Face: FaceJack,
+				Suit: SuitClubs,
+			},
+			{
+				Face: Face10,
+				Suit: SuitHearts,
+			},
+		}
+		assert.True(t, isCombinationOfStraight(cards))
+	})
+	t.Run("[AD, KS, QD, 2C, 3H] produce false", func(t *testing.T) {
+		cards := []Card{
+			{
+				Face: FaceAce,
+				Suit: SuitDiamonds,
+			},
+			{
+				Face: FaceKing,
+				Suit: SuitSpades,
+			},
+			{
+				Face: FaceQueen,
+				Suit: SuitDiamonds,
+			},
+			{
+				Face: Face2,
+				Suit: SuitClubs,
+			},
+			{
+				Face: Face3,
+				Suit: SuitHearts,
+			},
+		}
+		assert.False(t, isCombinationOfStraight(cards))
+	})
+	t.Run("empty cards produce false", func(t *testing.T) {
+		var cards []Card
+		assert.False(t, isCombinationOfStraight(cards))
+	})
+}

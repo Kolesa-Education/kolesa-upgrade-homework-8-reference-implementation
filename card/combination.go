@@ -2,6 +2,7 @@ package card
 
 import (
 	"github.com/samber/lo"
+	"golang.org/x/exp/slices"
 	"sort"
 )
 
@@ -73,4 +74,32 @@ func isCombinationOfTwoPairs(cards []Card) bool {
 	return isFaceBasedCombination(cards, func(values []int) bool {
 		return values[0] == 2 && values[1] == 2
 	})
+}
+
+func isCombinationOfStraight(cards []Card) bool {
+	if len(cards) != ValidCombinationSize {
+		return false
+	}
+	numericValues := lo.Map[Card, int](cards, func(card Card, index int) int {
+		return card.NumericValue()
+	})
+
+	sort.Slice(numericValues, func(i, j int) bool {
+		return numericValues[i] > numericValues[j]
+	})
+
+	if slices.Contains(numericValues, NumericValueAce) && slices.Contains(numericValues, 2) {
+		return numericValues[0] == NumericValueAce &&
+			numericValues[1] == 5 &&
+			numericValues[2] == 4 &&
+			numericValues[3] == 3 &&
+			numericValues[4] == 2
+	} else {
+		for i := 0; i < len(numericValues)-1; i++ {
+			if numericValues[i]-numericValues[i+1] != 1 {
+				return false
+			}
+		}
+		return true
+	}
 }
