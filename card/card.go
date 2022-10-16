@@ -100,6 +100,15 @@ func (c Card) ShortRepresentation() (string, error) {
 	return fmt.Sprintf("%s%s", unicode, c.Face), nil
 }
 
+func (c Card) IsNumeric() bool {
+	switch c.Face {
+	case Face2, Face3, Face4, Face5, Face6, Face7, Face8, Face9, Face10:
+		return true
+	default:
+		return false
+	}
+}
+
 func New(suit string, face string) (*Card, error) {
 	if isValidSuit(suit) && isValidFace(face) {
 		return &Card{

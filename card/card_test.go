@@ -50,13 +50,11 @@ func TestNew(t *testing.T) {
 			}
 		}
 	})
-
 	t.Run("invalid face results in error", func(t *testing.T) {
 		c, err := New(SuitHearts, "invalid")
 		require.Error(t, err)
 		assert.Nil(t, c)
 	})
-
 	t.Run("invalid suit results in error", func(t *testing.T) {
 		c, err := New("invalid", FaceAce)
 		require.Error(t, err)
@@ -74,7 +72,6 @@ func TestCard_SuitUnicode(t *testing.T) {
 		require.NoError(t, err)
 		assert.Equal(t, unicode, SuitSpadesUnicode)
 	})
-
 	t.Run("diamonds", func(t *testing.T) {
 		c := Card{
 			Suit: SuitDiamonds,
@@ -84,7 +81,6 @@ func TestCard_SuitUnicode(t *testing.T) {
 		require.NoError(t, err)
 		assert.Equal(t, unicode, SuitDiamondsUnicode)
 	})
-
 	t.Run("hearts", func(t *testing.T) {
 		c := Card{
 			Suit: SuitHearts,
@@ -94,7 +90,6 @@ func TestCard_SuitUnicode(t *testing.T) {
 		require.NoError(t, err)
 		assert.Equal(t, unicode, SuitHeartsUnicode)
 	})
-
 	t.Run("clubs", func(t *testing.T) {
 		c := Card{
 			Suit: SuitClubs,
@@ -104,7 +99,6 @@ func TestCard_SuitUnicode(t *testing.T) {
 		require.NoError(t, err)
 		assert.Equal(t, unicode, SuitClubsUnicode)
 	})
-
 	t.Run("invalid suit", func(t *testing.T) {
 		c := Card{
 			Suit: "invalid",
@@ -126,7 +120,6 @@ func TestRandom(t *testing.T) {
 		assert.Equal(t, card.Suit, SuitDiamonds)
 		assert.Equal(t, card.Face, Face10)
 	})
-
 	t.Run("produces no errors", func(t *testing.T) {
 		for i := 0; i < 10_000; i++ {
 			randomSource := rand.NewSource(time.Now().UnixNano())
@@ -149,7 +142,6 @@ func TestCard_ShortRepresentation(t *testing.T) {
 		fmt.Println(representation)
 		assert.Equal(t, "♦A", representation)
 	})
-
 	t.Run("2 Spades", func(t *testing.T) {
 		c := Card{
 			Suit: SuitSpades,
@@ -160,7 +152,6 @@ func TestCard_ShortRepresentation(t *testing.T) {
 		fmt.Println(representation)
 		assert.Equal(t, "♠2", representation)
 	})
-
 	t.Run("invalid suit", func(t *testing.T) {
 		c := Card{
 			Suit: "invalid",
@@ -171,7 +162,6 @@ func TestCard_ShortRepresentation(t *testing.T) {
 		fmt.Println(representation)
 		assert.Equal(t, "", representation)
 	})
-
 	t.Run("invalid face", func(t *testing.T) {
 		t.Run("invalid suit", func(t *testing.T) {
 			c := Card{
@@ -183,5 +173,50 @@ func TestCard_ShortRepresentation(t *testing.T) {
 			fmt.Println(representation)
 			assert.Equal(t, "", representation)
 		})
+	})
+}
+
+func TestCard_IsNumeric(t *testing.T) {
+	t.Run("2 is numeric", func(t *testing.T) {
+		assert.True(t, Card{Face: Face2}.IsNumeric())
+	})
+	t.Run("3 is numeric", func(t *testing.T) {
+		assert.True(t, Card{Face: Face3}.IsNumeric())
+	})
+	t.Run("4 is numeric", func(t *testing.T) {
+		assert.True(t, Card{Face: Face4}.IsNumeric())
+	})
+	t.Run("5 is numeric", func(t *testing.T) {
+		assert.True(t, Card{Face: Face5}.IsNumeric())
+	})
+	t.Run("6 is numeric", func(t *testing.T) {
+		assert.True(t, Card{Face: Face6}.IsNumeric())
+	})
+	t.Run("7 is numeric", func(t *testing.T) {
+		assert.True(t, Card{Face: Face7}.IsNumeric())
+	})
+	t.Run("8 is numeric", func(t *testing.T) {
+		assert.True(t, Card{Face: Face8}.IsNumeric())
+	})
+	t.Run("9 is numeric", func(t *testing.T) {
+		assert.True(t, Card{Face: Face9}.IsNumeric())
+	})
+	t.Run("10 is numeric", func(t *testing.T) {
+		assert.True(t, Card{Face: Face10}.IsNumeric())
+	})
+	t.Run("J is not numeric", func(t *testing.T) {
+		assert.False(t, Card{Face: FaceJack}.IsNumeric())
+	})
+	t.Run("Q is not numeric", func(t *testing.T) {
+		assert.False(t, Card{Face: FaceQueen}.IsNumeric())
+	})
+	t.Run("K is not numeric", func(t *testing.T) {
+		assert.False(t, Card{Face: FaceKing}.IsNumeric())
+	})
+	t.Run("A is not numeric", func(t *testing.T) {
+		assert.False(t, Card{Face: FaceAce}.IsNumeric())
+	})
+	t.Run("invalid face is not numeric", func(t *testing.T) {
+		assert.False(t, Card{Face: "invalid"}.IsNumeric())
 	})
 }
