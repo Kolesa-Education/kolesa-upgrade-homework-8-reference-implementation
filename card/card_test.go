@@ -5,6 +5,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"math/rand"
+	"strconv"
 	"testing"
 	"time"
 )
@@ -218,5 +219,145 @@ func TestCard_IsNumeric(t *testing.T) {
 	})
 	t.Run("invalid face is not numeric", func(t *testing.T) {
 		assert.False(t, Card{Face: "invalid"}.IsNumeric())
+	})
+}
+
+func TestCard_StrictNumericValue(t *testing.T) {
+	t.Run("CardFace2 produces no error and validly converted", func(t *testing.T) {
+		c := Card{Face: Face2, Suit: SuitDiamonds}
+		nv, err := c.StrictNumericValue()
+		require.NoError(t, err)
+		assert.Equal(t, 2, nv)
+	})
+
+	t.Run("CardFace3 produces no error and validly converted", func(t *testing.T) {
+		c := Card{Face: Face3, Suit: SuitDiamonds}
+		nv, err := c.StrictNumericValue()
+		require.NoError(t, err)
+		assert.Equal(t, 3, nv)
+	})
+
+	t.Run("CardFace4 produces no error and validly converted", func(t *testing.T) {
+		c := Card{Face: Face4, Suit: SuitDiamonds}
+		nv, err := c.StrictNumericValue()
+		require.NoError(t, err)
+		assert.Equal(t, 4, nv)
+	})
+
+	t.Run("CardFace5 produces no error and validly converted", func(t *testing.T) {
+		c := Card{Face: Face5, Suit: SuitDiamonds}
+		nv, err := c.StrictNumericValue()
+		require.NoError(t, err)
+		assert.Equal(t, 5, nv)
+	})
+
+	t.Run("CardFace6 produces no error and validly converted", func(t *testing.T) {
+		c := Card{Face: Face6, Suit: SuitDiamonds}
+		nv, err := c.StrictNumericValue()
+		require.NoError(t, err)
+		assert.Equal(t, 6, nv)
+	})
+
+	t.Run("CardFace7 produces no error and validly converted", func(t *testing.T) {
+		c := Card{Face: Face7, Suit: SuitDiamonds}
+		nv, err := c.StrictNumericValue()
+		require.NoError(t, err)
+		assert.Equal(t, 7, nv)
+	})
+
+	t.Run("CardFace8 produces no error and validly converted", func(t *testing.T) {
+		c := Card{Face: Face8, Suit: SuitDiamonds}
+		nv, err := c.StrictNumericValue()
+		require.NoError(t, err)
+		assert.Equal(t, 8, nv)
+	})
+
+	t.Run("CardFace9 produces no error and validly converted", func(t *testing.T) {
+		c := Card{Face: Face9, Suit: SuitDiamonds}
+		nv, err := c.StrictNumericValue()
+		require.NoError(t, err)
+		assert.Equal(t, 9, nv)
+	})
+
+	t.Run("CardFace10 produces no error and validly converted", func(t *testing.T) {
+		c := Card{Face: Face10, Suit: SuitDiamonds}
+		nv, err := c.StrictNumericValue()
+		require.NoError(t, err)
+		assert.Equal(t, 10, nv)
+	})
+
+	t.Run("CardFaceJack produces 0, error", func(t *testing.T) {
+		c := Card{Face: FaceJack, Suit: SuitDiamonds}
+		nv, err := c.StrictNumericValue()
+		require.Error(t, err)
+		assert.Equal(t, 0, nv)
+	})
+
+	t.Run("CardFaceQueen produces 0, error", func(t *testing.T) {
+		c := Card{Face: FaceQueen, Suit: SuitDiamonds}
+		nv, err := c.StrictNumericValue()
+		require.Error(t, err)
+		assert.Equal(t, 0, nv)
+	})
+
+	t.Run("CardFaceKing produces 0, error", func(t *testing.T) {
+		c := Card{Face: FaceKing, Suit: SuitDiamonds}
+		nv, err := c.StrictNumericValue()
+		require.Error(t, err)
+		assert.Equal(t, 0, nv)
+	})
+
+	t.Run("CardFaceAce produces 0, error", func(t *testing.T) {
+		c := Card{Face: FaceAce, Suit: SuitDiamonds}
+		nv, err := c.StrictNumericValue()
+		require.Error(t, err)
+		assert.Equal(t, 0, nv)
+	})
+
+	t.Run("invalid card face produces 0, error", func(t *testing.T) {
+		c := Card{Face: "invalid", Suit: SuitDiamonds}
+		nv, err := c.StrictNumericValue()
+		require.Error(t, err)
+		assert.Equal(t, 0, nv)
+	})
+
+	t.Run("invalid numeric card face produces 0, error", func(t *testing.T) {
+		c := Card{Face: "1", Suit: SuitDiamonds}
+		nv, err := c.StrictNumericValue()
+		require.Error(t, err)
+		assert.Equal(t, 0, nv)
+	})
+
+}
+
+func TestCard_NumericValue(t *testing.T) {
+	t.Run("Numeric -> StrictNumeric", func(t *testing.T) {
+		for i := 2; i <= 10; i++ {
+			c := Card{Face: strconv.Itoa(i), Suit: SuitDiamonds}
+			nv, err := c.StrictNumericValue()
+			require.NoError(t, err)
+			assert.Equal(t, i, c.NumericValue())
+			assert.Equal(t, nv, c.NumericValue())
+		}
+	})
+	t.Run("Jack -> 11", func(t *testing.T) {
+		c := Card{Face: FaceJack, Suit: SuitDiamonds}
+		assert.Equal(t, 11, c.NumericValue())
+	})
+	t.Run("Queen -> 12", func(t *testing.T) {
+		c := Card{Face: FaceQueen, Suit: SuitDiamonds}
+		assert.Equal(t, 12, c.NumericValue())
+	})
+	t.Run("King -> 13", func(t *testing.T) {
+		c := Card{Face: FaceKing, Suit: SuitDiamonds}
+		assert.Equal(t, 13, c.NumericValue())
+	})
+	t.Run("Ace -> 14", func(t *testing.T) {
+		c := Card{Face: FaceAce, Suit: SuitDiamonds}
+		assert.Equal(t, 14, c.NumericValue())
+	})
+	t.Run("invalid -> 0", func(t *testing.T) {
+		c := Card{Face: "invalid", Suit: SuitDiamonds}
+		assert.Equal(t, 0, c.NumericValue())
 	})
 }

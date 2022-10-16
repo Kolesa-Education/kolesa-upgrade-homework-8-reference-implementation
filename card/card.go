@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math/rand"
+	"strconv"
 )
 
 const (
@@ -37,6 +38,13 @@ const (
 	FaceQueen = "Q"
 	FaceKing  = "K"
 	FaceAce   = "A"
+)
+
+const (
+	NumericValueJack  = 11
+	NumericValueQueen = 12
+	NumericValueKing  = 13
+	NumericValueAce   = 14
 )
 
 type Card struct {
@@ -106,6 +114,38 @@ func (c Card) IsNumeric() bool {
 		return true
 	default:
 		return false
+	}
+}
+
+func (c Card) StrictNumericValue() (int, error) {
+	if c.IsNumeric() {
+		atoi, err := strconv.Atoi(c.Face)
+		if err != nil {
+			return 0, err
+		}
+		return atoi, nil
+	} else {
+		return 0, errors.New("not-numeric cards cannot have numeric value")
+	}
+}
+
+func (c Card) NumericValue() int {
+	if c.IsNumeric() {
+		numericValue, _ := c.StrictNumericValue()
+		return numericValue
+	} else {
+		switch c.Face {
+		case FaceJack:
+			return NumericValueJack
+		case FaceQueen:
+			return NumericValueQueen
+		case FaceKing:
+			return NumericValueKing
+		case FaceAce:
+			return NumericValueAce
+		default:
+			return 0
+		}
 	}
 }
 
