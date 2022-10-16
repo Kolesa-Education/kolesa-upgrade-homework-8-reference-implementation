@@ -1,6 +1,7 @@
 package card
 
 import (
+	"errors"
 	"github.com/samber/lo"
 	"golang.org/x/exp/slices"
 	"sort"
@@ -20,6 +21,19 @@ const CombinationStraightFlush = "Straight Flush"
 type PokerCombination interface {
 	Name() string
 	Cards() []Card
+}
+
+type BasicPokerCombination struct {
+	name  string
+	cards []Card
+}
+
+func (r BasicPokerCombination) Name() string {
+	return r.name
+}
+
+func (r BasicPokerCombination) Cards() []Card {
+	return r.cards
 }
 
 func countFaces(cards []Card) map[string]int {
@@ -123,4 +137,30 @@ func isCombinationOfFlush(cards []Card) bool {
 	suits := countSuits(cards)
 	suitsCount := lo.Values(suits)
 	return len(suitsCount) == 1 && suitsCount[0] == 5
+}
+
+func CombinationOf(cards []Card) (PokerCombination, error) {
+	if len(cards) != ValidCombinationSize {
+		return nil, errors.New("cards is not of valid size")
+	}
+	switch {
+	case isCombinationOfFlush(cards) && isCombinationOfStraight(cards):
+		return BasicPokerCombination{name: CombinationStraightFlush, cards: cards}, nil
+	case isCombinationOfFourOfAKind(cards):
+		return BasicPokerCombination{name: CombinationFourOfAKind, cards: cards}, nil
+	case isCombinationOfFullHouse(cards):
+		return BasicPokerCombination{name: CombinationFullHouse, cards: cards}, nil
+	case isCombinationOfFlush(cards):
+		return BasicPokerCombination{name: CombinationFlush, cards: cards}, nil
+	case isCombinationOfStraight(cards):
+		return BasicPokerCombination{name: CombinationStraight, cards: cards}, nil
+	case isCombinationOfThreeOfAKind(cards):
+		return BasicPokerCombination{name: CombinationThreeOfAKind, cards: cards}, nil
+	case isCombinationOfTwoPairs(cards):
+		return BasicPokerCombination{name: CombinationTwoPairs, cards: cards}, nil
+	case isCombinationOfPair(cards):
+		return BasicPokerCombination{name: CombinationPairName, cards: cards}, nil
+	default:
+		return nil, errors.New("not a combination")
+	}
 }
