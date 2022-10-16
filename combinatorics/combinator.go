@@ -1,5 +1,9 @@
 package combinatorics
 
+import (
+	combo "github.com/natemcintosh/gocombinatorics"
+)
+
 func deduplicate[T comparable](elements []T) []T {
 	allKeys := map[T]bool{}
 	var list []T
@@ -11,4 +15,19 @@ func deduplicate[T comparable](elements []T) []T {
 		}
 	}
 	return list
+}
+
+func combinations[T comparable](elements []T, sliceSize int) ([][]T, error) {
+	combination, err := combo.NewCombinations(elements, sliceSize)
+	if err != nil {
+		return nil, err
+	}
+	var result [][]T
+	for combination.Next() {
+		items := combination.Items()
+		copied := make([]T, len(items))
+		copy(copied, items)
+		result = append(result, copied)
+	}
+	return result, nil
 }
