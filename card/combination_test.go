@@ -496,3 +496,85 @@ func Test_isCombinationOfStraight(t *testing.T) {
 		assert.False(t, isCombinationOfStraight(cards))
 	})
 }
+
+func Test_isCombinationOfFlush(t *testing.T) {
+	t.Run("[6D, 7D, 8D, 9D, 10D] produce true", func(t *testing.T) {
+		cards := []Card{
+			{
+				Face: Face6,
+				Suit: SuitDiamonds,
+			},
+			{
+				Face: Face7,
+				Suit: SuitDiamonds,
+			},
+			{
+				Face: Face8,
+				Suit: SuitDiamonds,
+			},
+			{
+				Face: Face9,
+				Suit: SuitDiamonds,
+			},
+			{
+				Face: Face10,
+				Suit: SuitDiamonds,
+			},
+		}
+		assert.True(t, isCombinationOfFlush(cards))
+	})
+	t.Run("[2S, 5S, AS, KS, 10S] produce true", func(t *testing.T) {
+		cards := []Card{
+			{
+				Face: Face2,
+				Suit: SuitSpades,
+			},
+			{
+				Face: Face5,
+				Suit: SuitSpades,
+			},
+			{
+				Face: FaceAce,
+				Suit: SuitSpades,
+			},
+			{
+				Face: FaceKing,
+				Suit: SuitSpades,
+			},
+			{
+				Face: Face10,
+				Suit: SuitSpades,
+			},
+		}
+		assert.True(t, isCombinationOfFlush(cards))
+	})
+	t.Run("[2S, 5S, AS, KS, 10D] produce false", func(t *testing.T) {
+		cards := []Card{
+			{
+				Face: Face2,
+				Suit: SuitSpades,
+			},
+			{
+				Face: Face5,
+				Suit: SuitSpades,
+			},
+			{
+				Face: FaceAce,
+				Suit: SuitSpades,
+			},
+			{
+				Face: FaceKing,
+				Suit: SuitSpades,
+			},
+			{
+				Face: Face10,
+				Suit: SuitDiamonds,
+			},
+		}
+		assert.False(t, isCombinationOfFlush(cards))
+	})
+	t.Run("empty cards produce false", func(t *testing.T) {
+		var cards []Card
+		assert.False(t, isCombinationOfStraight(cards))
+	})
+}

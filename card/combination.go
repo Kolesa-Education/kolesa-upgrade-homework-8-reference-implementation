@@ -34,6 +34,18 @@ func countFaces(cards []Card) map[string]int {
 	return cardFaceCount
 }
 
+func countSuits(cards []Card) map[string]int {
+	cardSuitsCount := map[string]int{}
+	for _, card := range cards {
+		if count, ok := cardSuitsCount[card.Suit]; ok {
+			cardSuitsCount[card.Suit] = count + 1
+		} else {
+			cardSuitsCount[card.Suit] = 1
+		}
+	}
+	return cardSuitsCount
+}
+
 func isFaceBasedCombination(cards []Card, condition func([]int) bool) bool {
 	if len(cards) != ValidCombinationSize {
 		return false
@@ -102,4 +114,13 @@ func isCombinationOfStraight(cards []Card) bool {
 		}
 		return true
 	}
+}
+
+func isCombinationOfFlush(cards []Card) bool {
+	if len(cards) != ValidCombinationSize {
+		return false
+	}
+	suits := countSuits(cards)
+	suitsCount := lo.Values(suits)
+	return len(suitsCount) == 1 && suitsCount[0] == 5
 }
