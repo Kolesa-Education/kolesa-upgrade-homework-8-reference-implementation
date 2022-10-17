@@ -1,0 +1,97 @@
+♥J,♣2,♦J,♠Q,♦8 | Pair
+♥J,♣2,♦J,♠Q,♥A | Pair
+♥J,♣2,♦J,♠Q,♣10 | Pair
+♥J,♣2,♦J,♠Q,♣8 | Pair
+♥J,♣2,♦J,♠Q,♠J | Three Of A Kind
+♥J,♣2,♦J,♦8,♥A | Pair
+♥J,♣2,♦J,♦8,♣10 | Pair
+♥J,♣2,♦J,♦8,♣8 | Two Pairs
+♥J,♣2,♦J,♦8,♠J | Three Of A Kind
+♥J,♣2,♦J,♥A,♣10 | Pair
+♥J,♣2,♦J,♥A,♣8 | Pair
+♥J,♣2,♦J,♥A,♠J | Three Of A Kind
+♥J,♣2,♦J,♣10,♣8 | Pair
+♥J,♣2,♦J,♣10,♠J | Three Of A Kind
+♥J,♣2,♦J,♣8,♠J | Three Of A Kind
+♥J,♣2,♠Q,♦8,♣8 | Pair
+♥J,♣2,♠Q,♦8,♠J | Pair
+♥J,♣2,♠Q,♥A,♠J | Pair
+♥J,♣2,♠Q,♣10,♠J | Pair
+♥J,♣2,♠Q,♣8,♠J | Pair
+♥J,♣2,♦8,♥A,♣8 | Pair
+♥J,♣2,♦8,♥A,♠J | Pair
+♥J,♣2,♦8,♣10,♣8 | Pair
+♥J,♣2,♦8,♣10,♠J | Pair
+♥J,♣2,♦8,♣8,♠J | Two Pairs
+♥J,♣2,♥A,♣10,♠J | Pair
+♥J,♣2,♥A,♣8,♠J | Pair
+♥J,♣2,♣10,♣8,♠J | Pair
+♥J,♦J,♠Q,♦8,♥A | Pair
+♥J,♦J,♠Q,♦8,♣10 | Pair
+♥J,♦J,♠Q,♦8,♣8 | Two Pairs
+♥J,♦J,♠Q,♦8,♠J | Three Of A Kind
+♥J,♦J,♠Q,♥A,♣10 | Pair
+♥J,♦J,♠Q,♥A,♣8 | Pair
+♥J,♦J,♠Q,♥A,♠J | Three Of A Kind
+♥J,♦J,♠Q,♣10,♣8 | Pair
+♥J,♦J,♠Q,♣10,♠J | Three Of A Kind
+♥J,♦J,♠Q,♣8,♠J | Three Of A Kind
+♥J,♦J,♦8,♥A,♣10 | Pair
+♥J,♦J,♦8,♥A,♣8 | Two Pairs
+♥J,♦J,♦8,♥A,♠J | Three Of A Kind
+♥J,♦J,♦8,♣10,♣8 | Two Pairs
+♥J,♦J,♦8,♣10,♠J | Three Of A Kind
+♥J,♦J,♦8,♣8,♠J | Full House
+♥J,♦J,♥A,♣10,♣8 | Pair
+♥J,♦J,♥A,♣10,♠J | Three Of A Kind
+♥J,♦J,♥A,♣8,♠J | Three Of A Kind
+♥J,♦J,♣10,♣8,♠J | Three Of A Kind
+♥J,♠Q,♦8,♥A,♣8 | Pair
+♥J,♠Q,♦8,♥A,♠J | Pair
+♥J,♠Q,♦8,♣10,♣8 | Pair
+♥J,♠Q,♦8,♣10,♠J | Pair
+♥J,♠Q,♦8,♣8,♠J | Two Pairs
+♥J,♠Q,♥A,♣10,♠J | Pair
+♥J,♠Q,♥A,♣8,♠J | Pair
+♥J,♠Q,♣10,♣8,♠J | Pair
+♥J,♦8,♥A,♣10,♣8 | Pair
+♥J,♦8,♥A,♣10,♠J | Pair
+♥J,♦8,♥A,♣8,♠J | Two Pairs
+♥J,♦8,♣10,♣8,♠J | Two Pairs
+♥J,♥A,♣10,♣8,♠J | Pair
+♣2,♦J,♠Q,♦8,♣8 | Pair
+♣2,♦J,♠Q,♦8,♠J | Pair
+♣2,♦J,♠Q,♥A,♠J | Pair
+♣2,♦J,♠Q,♣10,♠J | Pair
+♣2,♦J,♠Q,♣8,♠J | Pair
+♣2,♦J,♦8,♥A,♣8 | Pair
+♣2,♦J,♦8,♥A,♠J | Pair
+♣2,♦J,♦8,♣10,♣8 | Pair
+♣2,♦J,♦8,♣10,♠J | Pair
+♣2,♦J,♦8,♣8,♠J | Two Pairs
+♣2,♦J,♥A,♣10,♠J | Pair
+♣2,♦J,♥A,♣8,♠J | Pair
+♣2,♦J,♣10,♣8,♠J | Pair
+♣2,♠Q,♦8,♥A,♣8 | Pair
+♣2,♠Q,♦8,♣10,♣8 | Pair
+♣2,♠Q,♦8,♣8,♠J | Pair
+♣2,♦8,♥A,♣10,♣8 | Pair
+♣2,♦8,♥A,♣8,♠J | Pair
+♣2,♦8,♣10,♣8,♠J | Pair
+♦J,♠Q,♦8,♥A,♣8 | Pair
+♦J,♠Q,♦8,♥A,♠J | Pair
+♦J,♠Q,♦8,♣10,♣8 | Pair
+♦J,♠Q,♦8,♣10,♠J | Pair
+♦J,♠Q,♦8,♣8,♠J | Two Pairs
+♦J,♠Q,♥A,♣10,♠J | Pair
+♦J,♠Q,♥A,♣8,♠J | Pair
+♦J,♠Q,♣10,♣8,♠J | Pair
+♦J,♦8,♥A,♣10,♣8 | Pair
+♦J,♦8,♥A,♣10,♠J | Pair
+♦J,♦8,♥A,♣8,♠J | Two Pairs
+♦J,♦8,♣10,♣8,♠J | Two Pairs
+♦J,♥A,♣10,♣8,♠J | Pair
+♠Q,♦8,♥A,♣10,♣8 | Pair
+♠Q,♦8,♥A,♣8,♠J | Pair
+♠Q,♦8,♣10,♣8,♠J | Pair
+♦8,♥A,♣10,♣8,♠J | Pair
