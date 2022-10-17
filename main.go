@@ -58,10 +58,6 @@ func processFile(dirName, fileName, resultDirName string) {
 		log.Fatalln(err)
 	}
 
-	resultCards := lo.Map[card.PokerCombination, []card.Card](result, func(t card.PokerCombination, i int) []card.Card {
-		return t.Cards()
-	})
-
 	resultFile, err := os.OpenFile(
 		fmt.Sprintf("%s/%s", resultDirName, fileName),
 		os.O_CREATE|os.O_APPEND|os.O_WRONLY,
@@ -71,25 +67,16 @@ func processFile(dirName, fileName, resultDirName string) {
 		log.Fatalln(err)
 	}
 
-	representations := lo.Map[[]card.Card, []string](resultCards, func(cards []card.Card, index int) []string {
-		result := lo.Map[card.Card, string](cards, func(card2 card.Card, index2 int) string {
-			r, err := card2.ShortRepresentation()
-			if err != nil {
-				log.Fatalln(err)
-			}
-			return r
-		})
-		return result
-	})
-
-	lo.ForEach[[]string](representations, func(rs []string, index int) {
-		if index < card.ValidCombinationSize {
-			_, err = resultFile.Write([]byte(fmt.Sprintf("%s", rs[index])))
-			if err != nil {
-				log.Fatalln(err)
-			}
+	lo.ForEach[card.PokerCombination](result, func(combination card.PokerCombination, index int) {
+		representation, err := combination.Representation()
+		if err != nil {
+			log.Fatalln(err)
 		}
 
+		_, err = resultFile.WriteString(fmt.Sprintf("%s\n", representation))
+		if err != nil {
+			log.Fatalln(err)
+		}
 	})
 
 	_ = resultFile.Close()
