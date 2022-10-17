@@ -161,6 +161,6 @@ func CombinationOf(cards []Card) (PokerCombination, error) {
 	case isCombinationOfPair(cards):
 		return BasicPokerCombination{name: CombinationPairName, cards: cards}, nil
 	default:
-		return nil, errors.New("not a combination")
+		return nil, nil
 	}
 }

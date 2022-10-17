@@ -4,7 +4,7 @@ import (
 	combo "github.com/natemcintosh/gocombinatorics"
 )
 
-func deduplicate[T comparable](elements []T) []T {
+func Deduplicate[T comparable](elements []T) []T {
 	allKeys := map[T]bool{}
 	var list []T
 
@@ -17,7 +17,7 @@ func deduplicate[T comparable](elements []T) []T {
 	return list
 }
 
-func combinations[T comparable](elements []T, sliceSize int) ([][]T, error) {
+func Combinations[T comparable](elements []T, sliceSize int) ([][]T, error) {
 	combination, err := combo.NewCombinations(elements, sliceSize)
 	if err != nil {
 		return nil, err

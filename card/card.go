@@ -165,3 +165,18 @@ func Random(random rand.Rand) (*Card, error) {
 	face := randomFace(random)
 	return New(suit, face)
 }
+
+func SuitOfUnicodeSymbol(unicode string) (string, error) {
+	switch unicode {
+	case SuitSpadesUnicode:
+		return SuitSpades, nil
+	case SuitHeartsUnicode:
+		return SuitHearts, nil
+	case SuitClubsUnicode:
+		return SuitClubs, nil
+	case SuitDiamondsUnicode:
+		return SuitDiamonds, nil
+	default:
+		return "", errors.New("not implemented suit")
+	}
+}
