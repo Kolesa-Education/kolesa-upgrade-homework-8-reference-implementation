@@ -361,3 +361,44 @@ func TestCard_NumericValue(t *testing.T) {
 		assert.Equal(t, 0, c.NumericValue())
 	})
 }
+
+func TestFromShortRepresentation(t *testing.T) {
+	//♣J,♦7,♣K,♦9,♥7,♥A,♥3,♥Q,♥7,♠6,♣9,♥3,♠Q,♦J
+	t.Run("♣J", func(t *testing.T) {
+		representation := "♣J"
+		card, err := FromShortRepresentation(representation)
+		require.NoError(t, err)
+		assert.Equal(t, FaceJack, card.Face)
+		assert.Equal(t, SuitClubs, card.Suit)
+	})
+	t.Run("♦7", func(t *testing.T) {
+		representation := "♦7"
+		card, err := FromShortRepresentation(representation)
+		require.NoError(t, err)
+		assert.Equal(t, Face7, card.Face)
+		assert.Equal(t, SuitDiamonds, card.Suit)
+	})
+	t.Run("♠10", func(t *testing.T) {
+		representation := "♠10"
+		card, err := FromShortRepresentation(representation)
+		require.NoError(t, err)
+		assert.Equal(t, Face10, card.Face)
+		assert.Equal(t, SuitSpades, card.Suit)
+	})
+	t.Run("♥A", func(t *testing.T) {
+		representation := "♥A"
+		card, err := FromShortRepresentation(representation)
+		require.NoError(t, err)
+		assert.Equal(t, FaceAce, card.Face)
+		assert.Equal(t, SuitHearts, card.Suit)
+	})
+
+	t.Run("♠Q with newline", func(t *testing.T) {
+		representation := "♠Q\n"
+		card, err := FromShortRepresentation(representation)
+		require.NoError(t, err)
+		assert.Equal(t, FaceQueen, card.Face)
+		assert.Equal(t, SuitSpades, card.Suit)
+	})
+
+}

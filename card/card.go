@@ -3,8 +3,11 @@ package card
 import (
 	"errors"
 	"fmt"
+	"log"
 	"math/rand"
 	"strconv"
+	"strings"
+	"unicode/utf8"
 )
 
 const (
@@ -158,6 +161,27 @@ func New(suit string, face string) (*Card, error) {
 	} else {
 		return nil, errors.New(fmt.Sprintf("Cannot construct Card with suit %s, face %s", suit, face))
 	}
+}
+
+func FromShortRepresentation(representation string) (*Card, error) {
+	representation = strings.Trim(representation, "\n")
+	suitUnicode, size := utf8.DecodeRuneInString(representation)
+	face := representation[size:]
+	suit, err := SuitOfUnicodeSymbol(string(suitUnicode))
+	log.Printf("parsing cardCSVEntry {%s}, suit {%s}, face {%s}, len {%d}",
+		representation,
+		suit,
+		face,
+		len(representation),
+	)
+	if err != nil {
+		return nil, err
+	}
+	resultCard := Card{
+		Face: face,
+		Suit: suit,
+	}
+	return &resultCard, nil
 }
 
 func Random(random rand.Rand) (*Card, error) {

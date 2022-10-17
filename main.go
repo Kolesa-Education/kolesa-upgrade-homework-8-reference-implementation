@@ -9,7 +9,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"unicode/utf8"
 )
 
 func processDatasetEntry(cards []card.Card) ([]card.PokerCombination, error) {
@@ -31,26 +30,10 @@ func processDatasetEntry(cards []card.Card) ([]card.PokerCombination, error) {
 	return result, nil
 }
 
-func parseCSVEntryToCard(cardCSVEntry string) (*card.Card, error) {
-	cardCSVEntry = strings.Trim(cardCSVEntry, "\n")
-	suitUnicode, size := utf8.DecodeRuneInString(cardCSVEntry)
-	face := cardCSVEntry[size:]
-	suit, err := card.SuitOfUnicodeSymbol(string(suitUnicode))
-	log.Printf("parsing cardCSVEntry {%s}, suit {%s}, face {%s}, len {%d}", cardCSVEntry, suit, face, len(cardCSVEntry))
-	if err != nil {
-		return nil, err
-	}
-	resultCard := card.Card{
-		Face: face,
-		Suit: suit,
-	}
-	return &resultCard, nil
-}
-
 func readCardsFromCSV(cardsCSV string) ([]card.Card, error) {
 	cards := strings.Split(cardsCSV, ",")
 	parsed := lo.Map[string, card.Card](cards, func(csvCard string, index int) card.Card {
-		parsedCard, err := parseCSVEntryToCard(csvCard)
+		parsedCard, err := card.FromShortRepresentation(csvCard)
 		if err != nil {
 			log.Fatalln(err)
 		}
