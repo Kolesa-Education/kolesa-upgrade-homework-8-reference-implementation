@@ -9,6 +9,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
+	"time"
 )
 
 func processDatasetEntry(cards []card.Card) ([]card.PokerCombination, error) {
@@ -95,8 +97,21 @@ func main() {
 		log.Fatalln(err)
 	}
 
+	start := time.Now()
+	var wg sync.WaitGroup
 	for _, dirEntry := range files {
 		log.Printf("iterating dirEntry %s\n", dirEntry)
-		processFile("dataset", dirEntry.Name(), "results")
+		wg.Add(1)
+
+		go func(entry os.DirEntry) {
+			defer wg.Done()
+			log.Printf("concurrently starting working on entry {%s}\n", entry.Name())
+			processFile("dataset", entry.Name(), "results")
+		}(dirEntry)
 	}
+	wg.Wait()
+
+	end := time.Now()
+	elapsed := end.Sub(start) //monotonic
+	log.Printf("Finished in {%d}ns/{%d}ms", elapsed, elapsed/time.Millisecond)
 }
