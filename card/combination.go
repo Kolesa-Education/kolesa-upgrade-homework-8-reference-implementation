@@ -2,9 +2,11 @@ package card
 
 import (
 	"errors"
+	"fmt"
 	"github.com/samber/lo"
 	"golang.org/x/exp/slices"
 	"sort"
+	"strings"
 )
 
 const ValidCombinationSize = 5
@@ -21,6 +23,7 @@ const CombinationStraightFlush = "Straight Flush"
 type PokerCombination interface {
 	Name() string
 	Cards() []Card
+	Representation() (string, error)
 }
 
 type BasicPokerCombination struct {
@@ -34,6 +37,22 @@ func (r BasicPokerCombination) Name() string {
 
 func (r BasicPokerCombination) Cards() []Card {
 	return r.cards
+}
+
+func (r BasicPokerCombination) Representation() (string, error) {
+	var builder strings.Builder
+	for index, card := range r.Cards() {
+		representation, err := card.ShortRepresentation()
+		if err != nil {
+			return "", err
+		}
+		builder.WriteString(representation)
+		if index < ValidCombinationSize-1 {
+			builder.WriteString(",")
+		}
+	}
+	builder.WriteString(fmt.Sprintf(" | %s", r.Name()))
+	return builder.String(), nil
 }
 
 func countFaces(cards []Card) map[string]int {

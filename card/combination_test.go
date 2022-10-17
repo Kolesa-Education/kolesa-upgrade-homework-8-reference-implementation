@@ -2,6 +2,7 @@ package card
 
 import (
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	"testing"
 )
 
@@ -576,5 +577,95 @@ func Test_isCombinationOfFlush(t *testing.T) {
 	t.Run("empty cards produce false", func(t *testing.T) {
 		var cards []Card
 		assert.False(t, isCombinationOfStraight(cards))
+	})
+}
+
+func TestBasicPokerCombination_Representation(t *testing.T) {
+	t.Run("[2S, 5S, AS, KS, KD]", func(t *testing.T) {
+		cards := []Card{
+			{
+				Face: Face2,
+				Suit: SuitSpades,
+			},
+			{
+				Face: Face5,
+				Suit: SuitSpades,
+			},
+			{
+				Face: FaceAce,
+				Suit: SuitSpades,
+			},
+			{
+				Face: FaceKing,
+				Suit: SuitSpades,
+			},
+			{
+				Face: FaceKing,
+				Suit: SuitDiamonds,
+			},
+		}
+		combination, err := CombinationOf(cards)
+		require.NotNil(t, combination)
+		require.NoError(t, err)
+		representation, err := combination.Representation()
+		require.NoError(t, err)
+		assert.Equal(t, "♠2,♠5,♠A,♠K,♦K | Pair", representation)
+	})
+	t.Run("[5S, 5S, AS, KS, KD]", func(t *testing.T) {
+		cards := []Card{
+			{
+				Face: Face5,
+				Suit: SuitSpades,
+			},
+			{
+				Face: Face5,
+				Suit: SuitSpades,
+			},
+			{
+				Face: FaceAce,
+				Suit: SuitSpades,
+			},
+			{
+				Face: FaceKing,
+				Suit: SuitSpades,
+			},
+			{
+				Face: FaceKing,
+				Suit: SuitDiamonds,
+			},
+		}
+		combination, err := CombinationOf(cards)
+		require.NotNil(t, combination)
+		require.NoError(t, err)
+		representation, err := combination.Representation()
+		require.NoError(t, err)
+		assert.Equal(t, "♠5,♠5,♠A,♠K,♦K | Two Pairs", representation)
+	})
+	t.Run("[3S, 5S, AS, 10S, KD]", func(t *testing.T) {
+		cards := []Card{
+			{
+				Face: Face3,
+				Suit: SuitSpades,
+			},
+			{
+				Face: Face5,
+				Suit: SuitSpades,
+			},
+			{
+				Face: FaceAce,
+				Suit: SuitSpades,
+			},
+			{
+				Face: Face10,
+				Suit: SuitSpades,
+			},
+			{
+				Face: FaceKing,
+				Suit: SuitDiamonds,
+			},
+		}
+		combination, err := CombinationOf(cards)
+		require.Nil(t, combination)
+		require.NoError(t, err)
 	})
 }
